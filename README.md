@@ -1,6 +1,8 @@
 # nodejs-express-sequelize-postgresql
 
-[BACKEND] nodejs-express-sequelize-postgresql
+## Introduction
+
+CRUD REST api server
 
 ## Node.js Module
 
