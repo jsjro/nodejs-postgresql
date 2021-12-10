@@ -9,6 +9,10 @@ const cors = require("cors");
 
 const app = express();
 
+// Disable `X-POWERED-BY` HTTP header
+// JS-S1004
+app.disable("x-powered-by");
+
 const corsOptions = {
   origin: "http://localhost:8081",
 };
@@ -40,6 +44,4 @@ require("./app/routes/post.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(PORT);
