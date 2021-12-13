@@ -27,7 +27,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the Post.",
+        message: err.message || " Some error occurred while creating the Post.",
       });
     });
 };
@@ -43,28 +43,32 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving posts.",
+        message: err.message || " Some error occurred while retrieving posts.",
       });
     });
 };
 
 // Find a single Post with an id
 exports.findOne = (req, res) => {
+  const targetId = req.params.id;
+
   Post.findByPk(req.params.id)
     .then((data) => {
       res.send(data);
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).send({
-        message: `Error retrieving Post with id=${id}`,
+        message: err.message || ` Error retrieving Post with id=${targetId}`,
       });
     });
 };
 
 // Update a Post by the id in the request
 exports.update = (req, res) => {
+  const targetId = req.params.id;
+
   Post.update(req.body, {
-    where: { id : req.params.id },
+    where: { id : targetId },
   })
     .then((num) => {
       if (num.length > 0) {
@@ -74,22 +78,24 @@ exports.update = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot update Post with id=${id}. Maybe Post was not found or req.body is empty!`,
+            message: `Cannot update Post with id=${targetId}. Maybe Post was not found or req.body is empty!`,
           });
         }
       }
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).send({
-        message: `Error updating Post with id=${id}`,
+        message: err.message || ` Error updating Post with id=${targetId}`,
       });
     });
 };
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res) => {
+  const targetId = req.params.id;
+
   Post.destroy({
-    where: { id : req.params.id },
+    where: { id : targetId },
   })
     .then((num) => {
       if (num === 1) {
@@ -98,13 +104,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Post with id=${id}. Maybe Post was not found!`,
+          message: `Cannot delete Post with id=${targetId}. Maybe Post was not found!`,
         });
       }
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).send({
-        message: `Could not delete Post with id=${id}`,
+        message: err.message || ` Could not delete Post with id=${targetId}`,
       });
     });
 };
