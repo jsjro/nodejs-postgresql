@@ -34,7 +34,9 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-  const condition = req.query.title ? { title: { [SEQUELIZE_OP.iLike]: `%${req.query.title}%` } } : null;
+  const condition = req.query.title
+    ? { title: { [SEQUELIZE_OP.iLike]: `%${req.query.title}%` } }
+    : null;
 
   POST.findAll({ where: condition })
     .then((data) => {
