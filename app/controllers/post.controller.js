@@ -1,6 +1,6 @@
-const {db} = require("../models");
-const {Post} = db.posts;
-const {Op} = db.Sequelize.Op;
+const { db } = require("../models");
+const { Post } = db.posts;
+const { Op } = db.Sequelize.Op;
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -27,16 +27,15 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Post.",
+        message: err.message || "Some error occurred while creating the Post.",
       });
     });
 };
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-  const {title} = req.query.title;
-  const {condition} = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+  const { title } = req.query.title;
+  const { condition } = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
 
   Post.findAll({ where: condition })
     .then((data) => {
@@ -44,15 +43,14 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts.",
+        message: err.message || "Some error occurred while retrieving posts.",
       });
     });
 };
 
 // Find a single Post with an id
 exports.findOne = (req, res) => {
-  const {id} = req.params.id;
+  const { id } = req.params.id;
 
   Post.findByPk(id)
     .then((data) => {
@@ -67,7 +65,7 @@ exports.findOne = (req, res) => {
 
 // Update a Post by the id in the request
 exports.update = (req, res) => {
-  const {id} = req.params.id;
+  const { id } = req.params.id;
 
   Post.update(req.body, {
     where: { id() {} },
@@ -92,7 +90,7 @@ exports.update = (req, res) => {
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res) => {
-  const {id} = req.params.id;
+  const { id } = req.params.id;
 
   Post.destroy({
     where: { id() {} },
@@ -126,8 +124,7 @@ exports.deleteAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all posts.",
+        message: err.message || "Some error occurred while removing all posts.",
       });
     });
 };
@@ -140,8 +137,7 @@ exports.findAllPublished = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts.",
+        message: err.message || "Some error occurred while retrieving posts.",
       });
     });
 };
