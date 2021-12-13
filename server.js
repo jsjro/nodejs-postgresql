@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./app/models");
 
 // In production
-db.sequelize.sync();
+db.sequelizeUse.sync();
 
 // In development, you may need to drop existing tables and re-sync database. Just use force: true as following code:
 // db.sequelize.sync({force: true}).then(() => {

@@ -1,6 +1,6 @@
-const {db} = require("../models");
-const {Post} = db.posts;
-const {Op} = db.Sequelize.Op;
+const db = require("../models");
+const Post = db.posts;
+const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -35,8 +35,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-  const {title} = req.query.title;
-  const {condition} = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+  const title = req.query.title;
+  const condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
 
   Post.findAll({ where: condition })
     .then((data) => {
@@ -52,9 +52,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Post with an id
 exports.findOne = (req, res) => {
-  const {id} = req.params.id;
-
-  Post.findByPk(id)
+  Post.findByPk(req.params.id)
     .then((data) => {
       res.send(data);
     })
@@ -67,20 +65,20 @@ exports.findOne = (req, res) => {
 
 // Update a Post by the id in the request
 exports.update = (req, res) => {
-  const {id} = req.params.id;
-
   Post.update(req.body, {
-    where: { id() {} },
+    where: { id : req.params.id },
   })
     .then((num) => {
-      if (num === 1) {
-        res.send({
-          message: "Post was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update Post with id=${id}. Maybe Post was not found or req.body is empty!`,
-        });
+      if (num.length > 0) {
+        if (num[0] === 1) {
+          res.send({
+            message: "Post was updated successfully.",
+          });
+        } else {
+          res.send({
+            message: `Cannot update Post with id=${id}. Maybe Post was not found or req.body is empty!`,
+          });
+        }
       }
     })
     .catch(() => {
@@ -92,10 +90,8 @@ exports.update = (req, res) => {
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res) => {
-  const {id} = req.params.id;
-
   Post.destroy({
-    where: { id() {} },
+    where: { id : req.params.id },
   })
     .then((num) => {
       if (num === 1) {
