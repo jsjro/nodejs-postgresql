@@ -68,7 +68,7 @@ exports.update = (req, res) => {
   const targetId = req.params.id;
 
   Post.update(req.body, {
-    where: { id : targetId },
+    where: { id: targetId },
   })
     .then((num) => {
       if (num.length > 0) {
@@ -95,7 +95,7 @@ exports.delete = (req, res) => {
   const targetId = req.params.id;
 
   Post.destroy({
-    where: { id : targetId },
+    where: { id: targetId },
   })
     .then((num) => {
       if (num === 1) {
