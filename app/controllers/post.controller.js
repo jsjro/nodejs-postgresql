@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
 // Update a Post by the id in the request
 exports.update = (req, res) => {
   Post.update(req.body, {
-    where: { id : req.params.id },
+    where: { id: req.params.id },
   })
     .then((num) => {
       if (num.length > 0) {
@@ -89,7 +89,7 @@ exports.update = (req, res) => {
 // Delete a Post with the specified id in the request
 exports.delete = (req, res) => {
   Post.destroy({
-    where: { id : req.params.id },
+    where: { id: req.params.id },
   })
     .then((num) => {
       if (num === 1) {
