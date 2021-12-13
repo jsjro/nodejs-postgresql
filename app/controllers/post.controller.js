@@ -1,6 +1,6 @@
-const db = require("../models");
-const Post = db.posts;
-const Op = db.Sequelize.Op;
+const DB = require("../models");
+const POST = DB.posts;
+const SEQUELIZE_OP = DB.Sequelize.Op;
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
   };
 
   // Save Post in the database
-  Post.create(post)
+  POST.create(post)
     .then((data) => {
       res.send(data);
     })
@@ -34,10 +34,9 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  const condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+  const condition = req.query.title ? { title: { [SEQUELIZE_OP.iLike]: `%${req.query.title}%` } } : null;
 
-  Post.findAll({ where: condition })
+  POST.findAll({ where: condition })
     .then((data) => {
       res.send(data);
     })
@@ -52,7 +51,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const targetId = req.params.id;
 
-  Post.findByPk(req.params.id)
+  POST.findByPk(req.params.id)
     .then((data) => {
       res.send(data);
     })
@@ -67,7 +66,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const targetId = req.params.id;
 
-  Post.update(req.body, {
+  POST.update(req.body, {
     where: { id: targetId },
   })
     .then((num) => {
@@ -94,7 +93,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const targetId = req.params.id;
 
-  Post.destroy({
+  POST.destroy({
     where: { id: targetId },
   })
     .then((num) => {
@@ -117,7 +116,7 @@ exports.delete = (req, res) => {
 
 // Delete all Posts from the database.
 exports.deleteAll = (req, res) => {
-  Post.destroy({
+  POST.destroy({
     where: {},
     truncate: false,
   })
@@ -133,7 +132,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Posts
 exports.findAllPublished = (req, res) => {
-  Post.findAll({ where: { published: true } })
+  POST.findAll({ where: { published: true } })
     .then((data) => {
       res.send(data);
     })
