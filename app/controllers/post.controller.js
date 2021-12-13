@@ -27,8 +27,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Post.",
+        message: err.message || "Some error occurred while creating the Post.",
       });
     });
 };
@@ -44,8 +43,7 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts.",
+        message: err.message || "Some error occurred while retrieving posts.",
       });
     });
 };
@@ -122,8 +120,7 @@ exports.deleteAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all posts.",
+        message: err.message || "Some error occurred while removing all posts.",
       });
     });
 };
@@ -136,8 +133,7 @@ exports.findAllPublished = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts.",
+        message: err.message || "Some error occurred while retrieving posts.",
       });
     });
 };
